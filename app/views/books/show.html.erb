@@ -1,0 +1,90 @@
+<div>
+  <%= flash[:notice] %>
+</div>
+<p id="notice"></p>
+　<div class="container px-5 px-sm-0">
+  <div class="row">
+<!-- ユーザーの投稿一覧 -->
+<%= render 'books/list', books: @books,user: @user,book: @book,booknew: @booknew%>
+</form>
+
+<%# if user_signed_in? %>
+<!--もしログインしたユーザーならば-->
+<%if @user==current_user %>
+
+    <div class="col-md-8 offset-md-1">
+      <h2>Book detail</h2>
+      <table class="table table-hover table-inverse">
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <!--<th colspan="3"></th>-->
+    </tr>
+  </thead>
+<!--ここにform_with使ったらエラーが出る-->
+
+  <tr>
+    <td>  <%= link_to user_path(@user.id) do %>
+     <%= image_tag @user.get_profile_image(100,100) %><br>
+     <%= @user.name %>
+  <% end %></td>
+ <td> <%= @book.title %></td>
+     <td><%=  @book.body %></td>
+     <td>
+       <!--<a class="btn btn-sm btn-success edit_book_87387" href="/books/87387/edit">Edit</a>-->
+        <%=link_to edit_book_path(@book),class:"btn btn-sm btn-success" do%>
+    Edit
+    <%end%>
+       </td>
+       
+     <td>
+        
+    <%= link_to "Destroy", book_path(@book), class:"text-dark", method: :delete %>
+
+       
+         
+         </td>
+  </tr>
+</table>
+</div>
+
+
+<% else %>
+<!--もしログインしたユーザーと違うならば-->
+<!--上のプログラムのedit　とdestroyを消す-->
+<div class="col-md-8 offset-md-1">
+      <h2>Book detail</h2>
+      <table class="table table-hover table-inverse">
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <!--<th colspan="3"></th>-->
+    </tr>
+  </thead>
+<!--ここにform_with使ったらエラーが出る-->
+  <tr>
+    <td>  <%= link_to user_path(@user.id) do %>
+     <%= image_tag @user.get_profile_image(100,100) %><br>
+     <%= @user.name %>
+  <% end %></td>
+  
+ <td> 
+  <%= link_to book_path(@book.id) do %>
+     <%= @book.title %>
+  <% end %>
+  </td>
+     <td><%=@book.body %></td>
+     
+    </tr>
+</table>
+</div>
+<% end %>
+
+
+</div>
+</div>
